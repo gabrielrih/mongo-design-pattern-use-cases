@@ -3,6 +3,15 @@ MongoDB design patterns are strategies to structure your schema and data effecti
 
 Since MongoDB is a NoSQL database, it offers flexibility to design schemas tailored to your use case.
 
+## Index
+- [Recap](#recap)
+   - [Golden rule](#golden-rule)
+   - [Data modeling](#data-modeling)
+      - [Workload](#workload)
+      - [Relationship](#relationship)
+- [Patterns](#patterns)
+- [Anti patterns](#anti-patterns)
+
 ## Recap
 Before we get started, it's important to remember some concepts:
 
