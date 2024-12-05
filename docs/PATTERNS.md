@@ -6,7 +6,6 @@
   </ul>
 </nav>
 
-
 # Patterns
 TO DO
 
