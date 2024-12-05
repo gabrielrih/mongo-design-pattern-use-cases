@@ -251,9 +251,7 @@ Example of reference: A student can enroll in multiple courses and a course can 
 
 Please, use the **guideline** below to decide if it's better embed or reference:
 
-```
-Simplicity - Go together - Query atomicity - Update complexity - Archival - Cardinality - Data duplication - Document size - Document growth - Workload - Individuality
-```
+![guideline to define if it's better to embed or reference](./guideline.drawio.png)
 
 > TIP: The child document make sense without the parent? If not, you probably must embed.
 
