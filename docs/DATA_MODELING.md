@@ -229,4 +229,4 @@ Please, use the **guideline** below to decide if it's better embed or reference:
 
 > TIP: The child document make sense without the parent? If not, you probably must embed.
 
-[Home](../README.md) > [Data Modeling](#)
+[Home](../README.md#patterns) > [Data Modeling](#)
