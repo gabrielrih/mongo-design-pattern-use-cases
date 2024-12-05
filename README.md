@@ -106,7 +106,7 @@ Example of reference: An user must have a single desk.
 ```json
 {
   "_id": "profile456",
-  "user_id": "user123",      // Reference back to the user (optional for bidirectional relationship)
+  "user_id": "user123",
   "bio": "Software developer with 10 years of experience.",
   "website": "https://johndoe.dev",
   "location": "New York, USA"
@@ -157,29 +157,29 @@ Example of embed: A person could have multiples addresses.
 Example of reference: A publisher can publish multiple books.
 ```json
 {
-   name: "O'Reilly Media",
-   founded: 1980,
-   location: "CA",
-   books: [123456789, 234567890, ...]
+   "name": "O'Reilly Media",
+   "founded": 1980,
+   "location": "CA",
+   "books": [123456789, 234567890]
 }
 ```
 
 ```json
 {
-    _id: 123456789,
-    title: "MongoDB: The Definitive Guide",
-    author: [ "Kristina Chodorow", "Mike Dirolf" ],
-    published_date: ISODate("2010-09-24"),
-    pages: 216,
-    language: "English"
+    "_id": 123456789,
+    "title": "MongoDB: The Definitive Guide",
+    "author": [ "Kristina Chodorow", "Mike Dirolf" ],
+    "published_date": "2010-09-24",
+    "pages": 216,
+    "language": "English"
 }
 {
-   _id: 234567890,
-   title: "50 Tips and Tricks for MongoDB Developer",
-   author: "Kristina Chodorow",
-   published_date: ISODate("2011-05-06"),
-   pages: 68,
-   language: "English"
+   "_id": 234567890,
+   "title": "50 Tips and Tricks for MongoDB Developer",
+   "author": "Kristina Chodorow",
+   "published_date": "2011-05-06",
+   "pages": 68,
+   "language": "English"
 }
 ```
 
@@ -194,16 +194,16 @@ Example of reference: A publisher can publish multiple books.
 Example of embed: A book can have multiple authors and an author can write multiple books.
 ```json
 {
-   _id: "book001",
-   title: "Cell Biology",
-   authors: [
+   "_id": "book001",
+   "title": "Cell Biology",
+   "authors": [
      {
-        author_id: "author124",
-        name: "Ellie Smith"
+        "author_id": "author124",
+        "name": "Ellie Smith"
      },
      {
-        author_id: "author381",
-        name: "John Palmer"
+        "author_id": "author381",
+        "name": "John Palmer"
      }
    ]
 }
@@ -211,16 +211,16 @@ Example of embed: A book can have multiple authors and an author can write multi
 
 ```json
 {
-   _id: "book002",
-   title: "Organic Chemistry",
-   authors: [
+   "_id": "book002",
+   "title": "Organic Chemistry",
+   "authors": [
      {
-        author_id: "author290",
-        name: "Jane James"
+        "author_id": "author290",
+        "name": "Jane James"
      },
      {
-        author_id: "author381",
-        name: "John Palmer"
+        "author_id": "author381",
+        "name": "John Palmer"
      }
    ]
 }
@@ -234,7 +234,7 @@ Example of reference: A student can enroll in multiple courses and a course can 
   "_id": "student001",
   "name": "Alice Johnson",
   "email": "alice@example.com",
-  "courses": ["course001", ...]
+  "courses": ["course001", "course002"]
 }
 ```
 
@@ -243,9 +243,8 @@ Example of reference: A student can enroll in multiple courses and a course can 
   "_id": "course001",
   "title": "Database Design",
   "instructor": "Dr. Smith",
-  "students": ["student001", ...]
+  "students": ["student001", "student002", "student003"]
 }
-
 ```
 
 > Using reference in N:N relationship is to hard to maintain.
