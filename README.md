@@ -81,16 +81,182 @@ Using embed:
 ![document that shows relationship using embed](https://www.mongodb.com/docs/manual/images/data-model-denormalized.bakedsvg.svg)
 
 Types of relationship:
-- Modeling one-to-one (1-1)
-- Modeling one-to-many (1-N)
-- Modeling many-to-many (N-N)
+- **Modeling one-to-one (1-1)**
 
-| Relationship | Relational database                                                                   | MongoDB                            |
-|--------------|---------------------------------------------------------------------------------------|------------------------------------|
-| 1:1 | Two tables: Each record in Table A is related to one record in Table B, and vice-versa | Embed or reference                |
-| 1:N | Two tables: Each record in Table A can be related to multiple records in Table B, but each record in Table B is related to only one record in Table A. | Embed or reference |
-| N:N | Three tables: Each record in Table A can be related to multiple records in Table B, and each record in Table B can also be related to multiple records in Table A. Create an association table (junction table) to represent the relationship. | Embed or reference |
+| Relational database                                                                   | MongoDB                            |
+|---------------------------------------------------------------------------------------|------------------------------------|
+| Two tables: Each record in Table A is related to one record in Table B, and vice-versa | Use [**Embed**](https://www.mongodb.com/docs/manual/tutorial/model-embedded-one-to-one-relationships-between-documents/#std-label-data-modeling-example-one-to-one) as the first option, but you can also use **reference** in some cases |
 
+Example of embed: A person can have a single passport.
+```json
+{
+  "_id": "emp001",
+  "name": "Alice Johnson",
+  "position": "Software Engineer",
+  "passport": {
+    "passport_number": "AB123456",
+    "issued_country": "USA",
+    "expiry_date": "2030-05-20"
+  }
+}
+```
+
+Example of reference: An user must have a single desk.
+
+```json
+{
+  "_id": "profile456",
+  "user_id": "user123",      // Reference back to the user (optional for bidirectional relationship)
+  "bio": "Software developer with 10 years of experience.",
+  "website": "https://johndoe.dev",
+  "location": "New York, USA"
+}
+```
+
+```json
+{
+  "_id": "desk123",
+  "desk_number": "A-45",
+  "location": "Building 1, Floor 3",
+  "features": ["Adjustable Height", "Monitor Stand"]
+}
+```
+
+> The reference option here could be an alternative when this second entity is more used in other workloads and the data between the two entities are not offen access together.
+
+- **Modeling one-to-many (1-N)**
+
+| Relational database                                                                   | MongoDB                            |
+|---------------------------------------------------------------------------------------|------------------------------------|
+| Two tables: Each record in Table A can be related to multiple records in Table B, but each record in Table B is related to only one record in Table A. | The most common option is to [Embed](https://www.mongodb.com/docs/manual/tutorial/model-embedded-one-to-many-relationships-between-documents/#std-label-data-modeling-example-one-to-many), but you may also [reference](https://www.mongodb.com/docs/manual/tutorial/model-referenced-one-to-many-relationships-between-documents/#std-label-data-modeling-publisher-and-books) |
+
+Example of embed: A person could have multiples addresses.
+```json
+{
+   "_id": "joe",
+   "name": "Joe Bookreader",
+   "addresses": [
+      {
+         "street": "123 Fake Street",
+         "city": "Faketon",
+         "state": "MA",
+         "zip": "12345"
+      },
+      {
+         "street": "1 Some Other Street",
+         "city": "Boston",
+         "state": "MA",
+         "zip": "12345"
+      }
+   ]
+}
+```
+
+> Embedding is a good choice when the the information in the N side cannot exist without the parent. It's also a good choice when the N side does not have to many elements (example, addresses and phones).
+
+Example of reference: A publisher can publish multiple books.
+```json
+{
+   name: "O'Reilly Media",
+   founded: 1980,
+   location: "CA",
+   books: [123456789, 234567890, ...]
+}
+```
+
+```json
+{
+    _id: 123456789,
+    title: "MongoDB: The Definitive Guide",
+    author: [ "Kristina Chodorow", "Mike Dirolf" ],
+    published_date: ISODate("2010-09-24"),
+    pages: 216,
+    language: "English"
+}
+{
+   _id: 234567890,
+   title: "50 Tips and Tricks for MongoDB Developer",
+   author: "Kristina Chodorow",
+   published_date: ISODate("2011-05-06"),
+   pages: 68,
+   language: "English"
+}
+```
+
+> It's a good choice when the N side has hundred or millions of elements. Example, reviews from a book.
+
+- **Modeling many-to-many (N-N)**
+
+| Relational database                                                                   | MongoDB                            |
+|---------------------------------------------------------------------------------------|------------------------------------|
+| Three tables: Each record in Table A can be related to multiple records in Table B, and each record in Table B can also be related to multiple records in Table A. Create an association table (junction table) to represent the relationship. | In most case use [**Embed**](https://www.mongodb.com/docs/manual/tutorial/model-embedded-many-to-many-relationships-between-documents/). You can use **reference** but it's not recommended as it is hard to manage |
+
+Example of embed: A book can have multiple authors and an author can write multiple books.
+```json
+{
+   _id: "book001",
+   title: "Cell Biology",
+   authors: [
+     {
+        author_id: "author124",
+        name: "Ellie Smith"
+     },
+     {
+        author_id: "author381",
+        name: "John Palmer"
+     }
+   ]
+}
+```
+
+```json
+{
+   _id: "book002",
+   title: "Organic Chemistry",
+   authors: [
+     {
+        author_id: "author290",
+        name: "Jane James"
+     },
+     {
+        author_id: "author381",
+        name: "John Palmer"
+     }
+   ]
+}
+```
+
+> It generates data duplication.
+
+Example of reference: A student can enroll in multiple courses and a course can have multiple students.
+```json
+{
+  "_id": "student001",
+  "name": "Alice Johnson",
+  "email": "alice@example.com",
+  "courses": ["course001", ...]
+}
+```
+
+```json
+{
+  "_id": "course001",
+  "title": "Database Design",
+  "instructor": "Dr. Smith",
+  "students": ["student001", ...]
+}
+
+```
+
+> Using reference in N:N relationship is to hard to maintain.
+
+Please, use the **guideline** below to decide if it's better embed or reference:
+
+```
+Simplicity - Go together - Query atomicity - Update complexity - Archival - Cardinality - Data duplication - Document size - Document growth - Workload - Individuality
+```
+
+> TIP: The child document make sense without the parent? If not, you probably must embed.
 
 ## Patterns
 [Click here](./PATTERNS.md)
