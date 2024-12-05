@@ -10,7 +10,7 @@ Since MongoDB is a NoSQL database, it offers flexibility to design schemas tailo
       - [Workload](#workload)
       - [Relationship](#relationship)
 - [Patterns](#patterns)
-- [Anti patterns](#anti-patterns)
+- [Anti-Patterns](#anti-patterns)
 
 ## Recap
 Before we get started, it's important to remember some concepts:
@@ -35,7 +35,7 @@ To ensure that your data model has a logical structure and achieves optimal perf
 
 This image shows how the steps below compose the schema on MongoDB:
 
-![structure of steps to compose a mongodb schema](./data.modeling.drawio.png)
+![structure of steps to compose a mongodb schema](./docs/img/data.modeling.drawio.png)
 
 #### Workload
 Identify and describe the workload in the first step to model your database. You should:
@@ -260,12 +260,12 @@ Example of reference: A student can enroll in multiple courses and a course can 
 
 Please, use the **guideline** below to decide if it's better embed or reference:
 
-![guideline to define if it's better to embed or reference](./guideline.drawio.png)
+![guideline to define if it's better to embed or reference](./docs/img/guideline.drawio.png)
 
 > TIP: The child document make sense without the parent? If not, you probably must embed.
 
 ## Patterns
-[Click here](./PATTERNS.md)
+[Click here](./docs/PATTERNS.md)
 
-## Anti patterns
-[Click here](./ANTI_PATTERNS.md)
+## Anti-Patterns
+[Click here](./docs/ANTI_PATTERNS.md)

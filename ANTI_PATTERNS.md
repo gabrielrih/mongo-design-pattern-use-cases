@@ -1,2 +1,0 @@
-# Anti Patterns
-TO DO
