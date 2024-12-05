@@ -69,10 +69,6 @@ It will help you:
 
 #### Relationship
 
-- Modeling one-to-one (1-1)
-- Modeling onw-to-many (1-N)
-- Modeling many-to-many (N-N)
-
 In MongoDB, you can use [references](https://www.mongodb.com/docs/manual/data-modeling/concepts/embedding-vs-references/#std-label-data-modeling-referencing) or [embedded documents](https://www.mongodb.com/docs/manual/data-modeling/concepts/embedding-vs-references/#std-label-data-modeling-embedding) to express relationship.
 
 Using references:
@@ -84,6 +80,16 @@ Using embed:
 
 ![document that shows relationship using embed](https://www.mongodb.com/docs/manual/images/data-model-denormalized.bakedsvg.svg)
 
+Types of relationship:
+- Modeling one-to-one (1-1)
+- Modeling one-to-many (1-N)
+- Modeling many-to-many (N-N)
+
+| Relationship | Relational database                                                                   | MongoDB                            |
+|--------------|---------------------------------------------------------------------------------------|------------------------------------|
+| 1:1 | Two tables: Each record in Table A is related to one record in Table B, and vice-versa | Embed or reference                |
+| 1:N | Two tables: Each record in Table A can be related to multiple records in Table B, but each record in Table B is related to only one record in Table A. | Embed or reference |
+| N:N | Three tables: Each record in Table A can be related to multiple records in Table B, and each record in Table B can also be related to multiple records in Table A. Create an association table (junction table) to represent the relationship. | Embed or reference |
 
 
 ## Patterns
