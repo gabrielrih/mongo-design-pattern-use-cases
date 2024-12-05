@@ -14,7 +14,7 @@ Data that are accessed together should be stored together.
 
 ### Data modeling
 
-Data modeling refers to the organization of data within a database and the links between related entities. Data in MongoDB has a flexible schema model, which means:
+[Data modeling](https://www.mongodb.com/docs/manual/data-modeling/) refers to the organization of data within a database and the links between related entities. Data in MongoDB has a flexible schema model, which means:
 - Documents within a single collection are not required to have the same set of fields.
 - A field's data type can differ between documents within a collection.
 
@@ -97,8 +97,3 @@ Types of relationship:
 
 ## Anti patterns
 [Click here](./ANTI_PATTERNS.md)
-
-## References
-- [Data modeling overview](https://www.mongodb.com/docs/manual/data-modeling/)
-- [Building with patterns a summary](https://www.mongodb.com/blog/post/building-with-patterns-a-summary)
-
