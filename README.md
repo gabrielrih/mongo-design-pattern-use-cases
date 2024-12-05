@@ -36,10 +36,10 @@ This image shows how the steps below compose the schema on MongoDB:
 
 ![structure of steps to compose a mongodb schema](./docs/img/data.modeling.drawio.png)
 
-[Click here for more information](./docs/DATA_MODELING.md)
+[Let's identify the workload and define the relationship?](./docs/DATA_MODELING.md)
 
 ## Patterns
-[Click here](./docs/PATTERNS.md)
+[Let's learn about it?](./docs/PATTERNS.md)
 
 ## Anti-Patterns
-[Click here](./docs/ANTI_PATTERNS.md)
+[Let's go](./docs/ANTI_PATTERNS.md)
