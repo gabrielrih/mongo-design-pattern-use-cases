@@ -12,6 +12,10 @@
         - [Subset](#subset)
     - [Just on application](#just-on-application)
         - [Aproximation](#aproximation)
+        - [Outlier](#outlier)
+        - [Preallocated](#preallocated)
+        - [Polymorphic](#polymorphic)
+        - [Tree and Graph](#tree-and-graph)
 # Patterns
 In 2019, MongoDB released an article talking about some patterns that you should use to model you database. This article was called [Building with Patterns: A Summary](https://www.mongodb.com/blog/post/building-with-patterns-a-summary).
 
@@ -22,7 +26,7 @@ In this article they have shown the power of patterns, how each of them could be
 ## Application and document changes
 Some design patterns that require changes on the application side and also on the document structure.
 
-## Attribute
+### Attribute
 It's useful for problems that are based around having **big documents with many similar fields but there is a subset of fields that share common characteristics** and we want to sort or query on that subset of fields. When the fields we need to sort on are only found in a small subset of documents. Or when both of those conditions are met within the documents.
 
 | Pros                        | Cons                              |
@@ -71,7 +75,7 @@ Using the Attribute pattern:
 }
 ```
 
-## Computed
+### Computed
 It's usefull when there are very **read intensive data access** patterns and that data needs to be **repeatedly computed** by the application.
 
 | Pros                        | Cons                              |
@@ -92,7 +96,7 @@ It's usefull when there are very **read intensive data access** patterns and tha
 }
 ```
 
-## Bucket
+### Bucket
 It's a great solution for when needing to manage **streaming data**, such as time-series, real-time analytics or Internet of Things (IoT) applications. 
 
 | Pros                        | Cons                              |
@@ -138,7 +142,7 @@ Consider to use this one...
 }
 ```
 
-## Document Versioning
+### Document Versioning
 When you are faced with the need to **maintain previous versions of documents** in MongoDB, the Document Versioning pattern is a possible solution. 
 
 This pattern is all about keeping the version history of documents available and usable.
@@ -181,10 +185,10 @@ Collection: policy_revisions
 }
 ```
 
-## Extended reference
+### Extended reference
 TO DO
 
-## Schema Versioning
+### Schema Versioning
 TO DO
 
 TO REVIEW
@@ -194,7 +198,7 @@ TO REVIEW
 | No performance impact on queries on the latest revision. | Queries need to target the correct collection. |
 |  | You probably would need to keep extra code to handle the different versions |
 
-## Subset
+### Subset
 TO DO
 
 ## Just on application
@@ -211,16 +215,16 @@ Example: Website views. Generally speaking, it isn't vital to know if 700,000 pe
 | Maintain statistically valid numbers | Implementation must be done in the application |
 
 
-## Outlier
+### Outlier
 TO DO
 
-## Preallocated
+### Preallocated
 TO DO
 
-## Polymorphic
+### Polymorphic
 TO DO
 
-## Tree and Graph
+### Tree and Graph
 TO DO
 
 [Home](../README.md#anti-patterns) > [Patterns](#)
