@@ -11,11 +11,10 @@
         - [Schema Versioning](#schema-versioning)
         - [Subset](#subset)
         - [Outlier](#outlier)
+        - [Polymorphic](#polymorphic)
     - [Just on application](#just-on-application)
         - [Aproximation](#aproximation)
-        - [Preallocated](#preallocated)
-        - [Polymorphic](#polymorphic)
-        - [Tree and Graph](#tree-and-graph)
+
 # Patterns
 In 2019, MongoDB released an article talking about some patterns that you should use to model you database. This article was called [Building with Patterns: A Summary](https://www.mongodb.com/blog/post/building-with-patterns-a-summary).
 
@@ -386,6 +385,50 @@ It may works as expected in the most scenarios, but, what about the "best seller
 
 > There are other methods to solve this problem, you could create an extra collection to move the overflow information for example.
 
+### Polymorphic
+It could be the solution when there are **a variety of documents that have more similarities than differences** and the documents need to be kept in a **single collection**.
+
+| Pros                        | Cons                              |
+|-----------------------------|-----------------------------------|
+| Easy to implement | |
+| Queries can run across a single collection |  |
+
+
+Example: A single collection that stores books, audiobooks and ebooks.
+
+```json
+{
+  "_id": 1,
+  "type": "book",
+  "title": "The Great Gatsby",
+  "author": "F. Scott Fitzgerald",
+  "genre": "Fiction",
+  "pageCount": 180,
+  "publisher": "Scribner"
+}
+
+{
+  "_id": 2,
+  "type": "audiobook",
+  "title": "Becoming",
+  "author": "Michelle Obama",
+  "genre": "Biography",
+  "narrator": "Michelle Obama",
+  "duration": 1140
+}
+
+{
+  "_id": 3,
+  "type": "ebook",
+  "title": "Clean Code",
+  "author": "Robert C. Martin",
+  "genre": "Technology",
+  "fileSize": 2.5,
+  "format": "PDF"
+}
+
+```
+
 
 ## Just on application
 Patterns that require changes just on the application side.
@@ -399,14 +442,5 @@ Example: Website views. Generally speaking, it isn't vital to know if 700,000 pe
 |-----------------------------|-----------------------------------|
 | Fewer writes to the database | Exact numbers aren’t being represented |
 | Maintain statistically valid numbers | Implementation must be done in the application |
-
-### Preallocated
-TO DO
-
-### Polymorphic
-TO DO
-
-### Tree and Graph
-TO DO
 
 [Home](../README.md#anti-patterns) > [Patterns](#)

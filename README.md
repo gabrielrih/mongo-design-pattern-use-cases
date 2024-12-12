@@ -11,7 +11,6 @@ Since MongoDB is a NoSQL database, it offers flexibility to design schemas tailo
       - [Relationship](#relationship)
 - [Patterns](#patterns)
 - [Anti-Patterns](#anti-patterns)
-- [Real use case](#real-use-case)
 
 ## Recap
 Before we get started, it's important to remember some concepts:
@@ -44,8 +43,3 @@ This image shows how the steps below compose the schema on MongoDB:
 
 ## Anti-Patterns
 [Let's go](./docs/ANTI_PATTERNS.md)
-
-## Real use case
-TO DO: WHAT MORE???
-
-Here we can see a real use case that uses these patterns: Bucket and Computed.
