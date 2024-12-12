@@ -186,17 +186,102 @@ Collection: policy_revisions
 ```
 
 ### Extended reference
-TO DO
+It's useful when your application is experiencing **lots of JOIN operations** to bring together frequently accessed data. 
 
-### Schema Versioning
-TO DO
-
-TO REVIEW
 | Pros                        | Cons                              |
 |-----------------------------|-----------------------------------|
-| Easy to implement, even on existing systems. | It may doubles the number of writes. |
-| No performance impact on queries on the latest revision. | Queries need to target the correct collection. |
-|  | You probably would need to keep extra code to handle the different versions |
+| Improves performance when there are a lot of JOIN operations | Data duplication |
+| Faster reads and a reduction in the overall number of JOINs |  Extra cost to update data |
+
+Example:
+Consider two collections: Customer and Order
+
+```json
+{
+    "_id": ObjectID(""),
+    "date": ISODate("2024-12-01"),
+    "customer_id": 123,
+    "products": [
+        {
+            "product": "pen",
+            "quantity": 10,
+            "cost": {
+                "value": 5,
+                "currency": "BRL"
+            }
+        }
+    ]
+}
+```
+
+```json
+{
+    "_id": 123,
+    "name": "Maria João de Albuquerque",
+    "street": "123 Main st",
+    "city": "Somewhere",
+    "country": "Some country"
+}
+```
+
+... consider to use this one on Order collection
+```json
+{
+    "_id": ObjectID(""),
+    "date": ISODate("2024-12-01"),
+    "customer": {
+        "id": 123,
+        "shipping_address": {
+            "name": "Maria João de Albuquerque",
+            "street": "123 Main st",
+            "city": "Somewhere",
+            "country": "Some country"
+        }
+    }
+    "products": [
+        {
+            "product": "pen",
+            "quantity": 10,
+            "cost": {
+                "value": 5,
+                "currency": "BRL"
+            }
+        }
+    ]
+}
+```
+
+### Schema Versioning
+It's usefull when changes on the data schema are frequently. This pattern allows to more than one document schema exist within the same collection.
+
+| Pros                        | Cons                              |
+|-----------------------------|-----------------------------------|
+| No downtime needed for migration | Might need two indexes for the same field during migration |
+| Control of schema migration | Extra code is needed |
+| Reduced future technical debt | Complexity if you must keep a lot of versions |
+
+Example:
+```json
+{
+    "_id": ObjectId(""),
+    "schema_version": "1",
+    "name": "Anakin Skywalker (Retired)",
+    "contact": "503-555-0210"
+}
+
+```json
+{
+    "_id": ObjectId(""),
+    "schema_version": "2",
+    "name": "Anakin Skywalker (Retired)",
+    "contact_method": [
+        { "work": "503-555-0210" },
+        { "mobile": "503-555-0220" },
+        { "twitter": "@anakinskywalker" },
+        { "skype": "AlwaysWithYou" }
+    ]
+}
+```
 
 ### Subset
 TO DO
