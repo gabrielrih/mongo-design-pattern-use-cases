@@ -10,9 +10,9 @@
         - [Extended reference](#extended-reference)
         - [Schema Versioning](#schema-versioning)
         - [Subset](#subset)
+        - [Outlier](#outlier)
     - [Just on application](#just-on-application)
         - [Aproximation](#aproximation)
-        - [Outlier](#outlier)
         - [Preallocated](#preallocated)
         - [Polymorphic](#polymorphic)
         - [Tree and Graph](#tree-and-graph)
@@ -343,6 +343,50 @@ Collection: reviews
 ... all the reviews here ...
 ```
 
+### Outlier
+Do you find that there are a **few queries or documents that don’t fit into the rest of your typical data patterns**? If so, the Outlier Pattern is a wonderful solution to this situation.
+
+
+| Pros                        | Cons                              |
+|-----------------------------|-----------------------------------|
+| Prevents a few documents or queries from determining an application’s solution | Often tailored for specific queries, therefore ad hoc queries may not perform well |
+| Queries are tailored for “typical” use cases, but outliers are still addressed | Much of this pattern is done with application code |
+
+Example: You may have a book collection and the names of the customers that purchases this book as an array.
+
+```json
+{
+    "_id": ObjectID("507f1f77bcf86cd799439011")
+    "title": "A Genealogical Record of a Line of Alger",
+    "author": "Ken W. Alger",
+    "customers_purchased": ["user00", "user01", "user02"]
+}
+```
+
+It may works as expected in the most scenarios, but, what about the "best sellers". This ones could contains millions of customers. In this case we could use a extra field called *has_extra* and move the overflow information to a new document likned with the books's id.
+
+```json
+{
+    "_id": ObjectID("507f191e810c19729de860ea"),
+    "title": "Harry Potter, the Next Chapter",
+    "author": "J.K. Rowling",
+    "customers_purchased": ["user00", "user01", "user02", …, "user999"],
+    "has_extras": "true"
+}
+
+{
+    "_id": ObjectID("607f191e810c19729de860ea"),
+    "linked_book_id": ObjectID("507f191e810c19729de860ea"),
+    "title": "Harry Potter, the Next Chapter",
+    "author": "J.K. Rowling",
+    "customers_purchased": ["user1000", "user1001", "user10012"],
+    "has_extras": "true"
+}
+```
+
+> There are other methods to solve this problem, you could create an extra collection to move the overflow information for example.
+
+
 ## Just on application
 Patterns that require changes just on the application side.
 
@@ -355,10 +399,6 @@ Example: Website views. Generally speaking, it isn't vital to know if 700,000 pe
 |-----------------------------|-----------------------------------|
 | Fewer writes to the database | Exact numbers aren’t being represented |
 | Maintain statistically valid numbers | Implementation must be done in the application |
-
-
-### Outlier
-TO DO
 
 ### Preallocated
 TO DO
