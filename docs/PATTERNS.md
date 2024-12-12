@@ -284,7 +284,64 @@ Example:
 ```
 
 ### Subset
-TO DO
+It's an alternative to solve the problem of having the working set **exceed the capacity of RAM** due to **large documents**.
+
+In this scenario, probably much of the data in the document is not being used by the application.
+
+| Pros                        | Cons                              |
+|-----------------------------|-----------------------------------|
+| Reduction in the overall size of the working set | The application must manage the subset |
+| Shorter disk access time for the most frequently used data | Pulling in additional data requires additional trips to the database |
+
+Example: Imagine an e-commerce site that has a list of reviews for a product. It contains hundreds of reviews in the product document.
+
+```json
+{
+    "_id": ObjectId(""),
+    "name": "Super pen",
+    "description": "This is the best pen ever",
+    "reviews": [
+        {
+            "review_id": 1,
+            "review_author": "Kristina",
+            "review_text": "This is indeed the best pen ever",
+            "published_date": ISODate("2024-12-01")
+        },
+        ... hundreds of reviews here...
+    ]
+}
+```
+
+You could separate it in two collections: product (containing just the most used reviews, for example the last 10, and another collection for all the reviews).
+
+Collection: product
+```json
+{
+    "_id": ObjectId(""),
+    "name": "Super pen",
+    "description": "This is the best pen ever",
+    "reviews": [
+        {
+            "review_id": 1,
+            "review_author": "Kristina",
+            "review_text": "This is indeed the best pen ever",
+            "published_date": ISODate("2024-12-01")
+        },
+        ... the last 10 reviews...
+    ]
+}
+```
+
+Collection: reviews
+```json
+{
+    "review_id": 1,
+    "review_author": "Kristina",
+    "review_text": "This is indeed the best pen ever",
+    "published_date": ISODate("2024-12-01")
+}
+... all the reviews here ...
+```
 
 ## Just on application
 Patterns that require changes just on the application side.
